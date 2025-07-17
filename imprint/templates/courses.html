@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+{% block content %}
+
+<h1 class="mt-4 mb-4">Courses</h1>
+    {% for course in courses %}
+        <h3>{{ course.1 }}</h3>
+            {% for row in course_list %}
+                {% if row.course_type == course.0 %}
+                    {% if row.status == 0%}
+                        <h5><del> {{ row.course_name }}<del></h5>
+                        <p><del>{{ row.description }}<del></p>
+                    {% else %}
+                        <h5>{{ row.course_name }}</h5>
+                        <p>{{ row.description }}</p>
+                    {% endif%}
+                {% endif%}
+            {% endfor %}
+    {% endfor %}
+{% endblock %}

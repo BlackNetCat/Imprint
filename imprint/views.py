@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from .forms import ApplicationForm
-from .models import Form
+from .models import Form, Course, COURSE_TYPE
 from django.contrib import messages
 from django.core.mail import EmailMessage
+from django.views import generic
 
 def index(request):
     form = ApplicationForm(request.POST)
@@ -27,5 +28,21 @@ def index(request):
         messages.success(request, "Form submitted successfully!")
     return render(request,"index.html")
 
+# def courses(request):
+#     return render(request, "courses.html")
+
 def about(request):
     return render(request, "about.html")
+
+class CourseList(generic.ListView):
+    queryset = Course.objects.order_by("-date_created")
+    template_name = "courses.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["courses"] = COURSE_TYPE
+        return context
+
+class CourseItemDetail(generic.DetailView):
+    model = Course
+    template_name = "course_item_detail.html"
