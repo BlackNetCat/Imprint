@@ -34,8 +34,6 @@ def index(request):
 def about(request):
     return render(request, "about.html")
 
-def tools(request):
-    return render(request, "tools.html")
 
 class CourseList(generic.ListView):
     queryset = Course.objects.order_by("-date_created")
